@@ -38,11 +38,25 @@
   <!-- Main Dashboard Container (Hidden by default) -->
   <div id="dashboard-container" class="dashboard-container" style="display: none;">
     
+    <!-- Mobile Top Bar -->
+    <header class="mobile-top-bar">
+      <button id="sidebarToggleBtn" class="hamburger-btn" aria-label="Toggle Sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="mobile-logo">
+        Chef <span>J</span> Admin
+      </div>
+      <span class="badge storage-badge-el" id="storage-badge-mobile">JSON Mode</span>
+    </header>
+
+    <!-- Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    
     <!-- Sidebar Navigation -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2>Chef <span>J</span> Admin</h2>
-        <span class="badge" id="storage-badge">JSON Mode</span>
+        <span class="badge storage-badge-el" id="storage-badge">JSON Mode</span>
       </div>
       <nav class="sidebar-menu">
         <a href="#general" class="menu-item active" data-tab="general"><i class="fas fa-sliders-h"></i> General & About</a>

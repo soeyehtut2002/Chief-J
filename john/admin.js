@@ -8,9 +8,13 @@ const loginContainer = document.getElementById('login-container');
 const dashboardContainer = document.getElementById('dashboard-container');
 const loginForm = document.getElementById('loginForm');
 const logoutBtn = document.getElementById('logoutBtn');
-const storageBadge = document.getElementById('storage-badge');
 const msgCountBadge = document.getElementById('msg-count-badge');
 const toastEl = document.getElementById('toast');
+
+// Mobile Sidebar Navigation elements
+const sidebar = document.getElementById('sidebar');
+const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
 // Modal Elements
 const editorModal = document.getElementById('editor-modal');
@@ -116,10 +120,11 @@ async function apiRequest(url, method = 'GET', body = null) {
 }
 
 function updateStorageBadge(mode) {
-    if (storageBadge) {
-        storageBadge.textContent = mode === 'PostgreSQL' ? 'PostgreSQL DB' : 'JSON File';
-        storageBadge.className = 'badge ' + (mode === 'PostgreSQL' ? 'postgres-mode' : 'json-mode');
-    }
+    const badges = document.querySelectorAll('.storage-badge-el');
+    badges.forEach(badge => {
+        badge.textContent = mode === 'PostgreSQL' ? 'PostgreSQL DB' : 'JSON File';
+        badge.className = 'badge storage-badge-el ' + (mode === 'PostgreSQL' ? 'postgres-mode' : 'json-mode');
+    });
 }
 
 // Load Portfolio Data
@@ -204,8 +209,27 @@ menuItems.forEach(item => {
 
         item.classList.add('active');
         document.getElementById(`${tabName}-tab`).classList.add('active');
+
+        // Close sidebar on mobile after clicking item
+        if (sidebar && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            sidebarBackdrop.classList.remove('active');
+        }
     });
 });
+
+// Mobile Hamburger & Backdrop Navigation Toggle
+if (sidebarToggleBtn && sidebar && sidebarBackdrop) {
+    sidebarToggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        sidebarBackdrop.classList.toggle('active');
+    });
+
+    sidebarBackdrop.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        sidebarBackdrop.classList.remove('active');
+    });
+}
 
 // 1. General & About Section populator
 function populateGeneralTab(data) {
