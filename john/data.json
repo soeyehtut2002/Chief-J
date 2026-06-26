@@ -1,0 +1,190 @@
+{
+  "hero": {
+    "subtitle": "Welcome to My Kitchen",
+    "title": "Chef J Test",
+    "tagline": "Crafting culinary masterpieces with passion, creativity, and the finest ingredients",
+    "bg_image": "images/hero-bg.jpg"
+  },
+  "about": {
+    "name": "MR.John",
+    "bio": "With 0 years of experience in Michelin-starred restaurants across Europe, I bring a unique blend of traditional Italian techniques and modern culinary innovation to every dish I create.",
+    "philosophy": "My philosophy is simple: respect the ingredients. I source only the finest local and seasonal produce, allowing the natural flavors to shine through in every creation.",
+    "image_url": "images/Image.jpg"
+  },
+  "counters": [
+    {
+      "count": 3,
+      "label": "Years Experience"
+    },
+    {
+      "count": 0,
+      "label": "Awards Won"
+    },
+    {
+      "count": 5000,
+      "label": "Dishes Created"
+    }
+  ],
+  "sections": [
+    {
+      "id": "home",
+      "title": "Home Banner",
+      "is_visible": true
+    },
+    {
+      "id": "about",
+      "title": "About Me",
+      "is_visible": true
+    },
+    {
+      "id": "specialties",
+      "title": "Signature Dishes",
+      "is_visible": true
+    },
+    {
+      "id": "experience",
+      "title": "Experience & Achievements",
+      "is_visible": true
+    },
+    {
+      "id": "gallery",
+      "title": "Culinary Gallery",
+      "is_visible": true
+    },
+    {
+      "id": "testimonials",
+      "title": "Testimonials",
+      "is_visible": true
+    },
+    {
+      "id": "contact",
+      "title": "Contact Me",
+      "is_visible": true
+    }
+  ],
+  "dishes": [
+    {
+      "id": 1,
+      "title": "Black Truffle Risotto",
+      "description": "Carnaroli rice cooked in rich bone broth with fresh black truffle and Parmigiano-Reggiano",
+      "image_url": "images/image1.avif"
+    },
+    {
+      "id": 2,
+      "title": "Pan-Seared Scallops",
+      "description": "With cauliflower puree, pancetta crisps, and micro herbs",
+      "image_url": "images/dish-2.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Grand Marnier Soufflé",
+      "description": "Light chocolate soufflé with orange zest and crème anglaise",
+      "image_url": "images/dish-3.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Herb-Crusted Rack of Lamb",
+      "description": "With roasted baby vegetables and red wine reduction",
+      "image_url": "images/dish-4.jpg"
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "date": "2021 - Present",
+      "title": "Executive Chef",
+      "subtitle": "La Belle Époque • Paris",
+      "description": "Leading a team of 15 chefs in a 2-Michelin-star restaurant. Introduced seasonal tasting menus that increased reservations by 40%."
+    },
+    {
+      "id": 2,
+      "date": "2018 - 2021",
+      "title": "Sous Chef",
+      "subtitle": "Ristorante Arte • Milan",
+      "description": "Managed kitchen operations and developed new menu items. Awarded \"Best New Restaurant in Lombardy\" in 2019."
+    },
+    {
+      "id": 3,
+      "date": "2016 - 2018",
+      "title": "Chef de Partie",
+      "subtitle": "The Savoy • London",
+      "description": "Specialized in pastry and dessert creation. Contributed to the restaurant's Michelin star retention."
+    },
+    {
+      "id": 4,
+      "date": "2015",
+      "title": "Culinary Award",
+      "subtitle": "\"Golden Toque\" International Culinary Competition",
+      "description": "First place in the international culinary competition with my signature truffle risotto dish."
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "image_url": "images/gallery-1.jpg",
+      "alt": "Restaurant Kitchen"
+    },
+    {
+      "id": 2,
+      "image_url": "images/gallery-2.jpg",
+      "alt": "Dish Presentation"
+    },
+    {
+      "id": 3,
+      "image_url": "images/gallery-3.jpg",
+      "alt": "Fresh Ingredients"
+    },
+    {
+      "id": 4,
+      "image_url": "images/gallery-4.jpg",
+      "alt": "Cooking Process"
+    },
+    {
+      "id": 5,
+      "image_url": "images/gallery-5.jpg",
+      "alt": "Plated Dish"
+    },
+    {
+      "id": 6,
+      "image_url": "images/gallery-6.jpg",
+      "alt": "Chef at Work"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "text": "Chef Rossi's culinary artistry transformed our wedding reception into an unforgettable experience. Every dish was a masterpiece.",
+      "author": "Sophia Laurent",
+      "role": "Event Client"
+    },
+    {
+      "id": 2,
+      "text": "Working with Marco elevated our restaurant to new heights. His innovative approach while respecting traditions is remarkable.",
+      "author": "Antoine Dubois",
+      "role": "Restaurant Owner, La Belle Époque"
+    },
+    {
+      "id": 3,
+      "text": "The tasting menu curated by Chef Rossi was the most exquisite dining experience of my life. Each course told a story.",
+      "author": "James Wilson",
+      "role": "Food Critic, Gourmet Magazine"
+    }
+  ],
+  "contact": {
+    "email": "marco@chefrossi.com",
+    "phone": "+1 (555) 123-4567",
+    "location": "Paris, France & Worldwide"
+  },
+  "socials": {
+    "instagram": "#",
+    "twitter": "#",
+    "linkedin": "#",
+    "youtube": "#"
+  },
+  "footer": {
+    "logo": "Chef John",
+    "tagline": "Crafting culinary excellence with passion and precision",
+    "copyright": "2023 Chef John. All rights reserved."
+  },
+  "messages": []
+}

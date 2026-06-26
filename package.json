@@ -1,0 +1,15 @@
+{
+  "name": "chief-j-portfolio",
+  "version": "1.0.0",
+  "description": "Professional Chef Portfolio with Admin Dashboard",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.12.0"
+  }
+}

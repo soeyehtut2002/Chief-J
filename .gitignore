@@ -1,0 +1,5 @@
+node_modules/
+*.log
+john/images/uploads/*
+!john/images/uploads/.gitkeep
+.env

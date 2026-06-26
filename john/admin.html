@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Chef John Portfolio</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Login Section -->
+  <div id="login-container" class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>Chef <span>J</span></h1>
+        <p>Administration Portal</p>
+      </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="password">Security Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Enter admin password" required>
+            <i class="fas fa-eye" id="togglePassword"></i>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Container (Hidden by default) -->
+  <div id="dashboard-container" class="dashboard-container" style="display: none;">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Chef <span>J</span> Admin</h2>
+        <span class="badge" id="storage-badge">JSON Mode</span>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="#general" class="menu-item active" data-tab="general"><i class="fas fa-sliders-h"></i> General & About</a>
+        <a href="#sections" class="menu-item" data-tab="sections"><i class="fas fa-eye"></i> Sections Visibility</a>
+        <a href="#dishes" class="menu-item" data-tab="dishes"><i class="fas fa-utensils"></i> Signature Dishes</a>
+        <a href="#experience" class="menu-item" data-tab="experience"><i class="fas fa-history"></i> Experience</a>
+        <a href="#gallery" class="menu-item" data-tab="gallery"><i class="fas fa-images"></i> Gallery</a>
+        <a href="#testimonials" class="menu-item" data-tab="testimonials"><i class="fas fa-comment-alt"></i> Testimonials</a>
+        <a href="#contact" class="menu-item" data-tab="contact"><i class="fas fa-address-book"></i> Contact & Socials</a>
+        <a href="#messages" class="menu-item" data-tab="messages"><i class="fas fa-envelope-open-text"></i> Messages <span class="msg-count" id="msg-count-badge">0</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" class="btn btn-secondary btn-sm"><i class="fas fa-external-link-alt"></i> View Site</a>
+        <button id="logoutBtn" class="btn btn-danger btn-sm"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content Area -->
+    <main class="main-content">
+      
+      <!-- General & About Tab -->
+      <section id="general-tab" class="tab-panel active">
+        <div class="panel-header">
+          <h2>General Settings & About Chef</h2>
+          <button type="button" class="btn btn-primary save-general-btn"><i class="fas fa-save"></i> Save Changes</button>
+        </div>
+        
+        <form id="generalForm" class="grid-2">
+          <!-- Hero Settings Card -->
+          <div class="card">
+            <h3>Hero Banner Section</h3>
+            <div class="form-group">
+              <label>Hero Subtitle</label>
+              <input type="text" id="hero-subtitle" required>
+            </div>
+            <div class="form-group">
+              <label>Hero Title</label>
+              <input type="text" id="hero-title" required>
+            </div>
+            <div class="form-group">
+              <label>Hero Tagline</label>
+              <textarea id="hero-tagline" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Hero Background Image</label>
+              <div class="image-upload-wrapper">
+                <input type="text" id="hero-bg-url" placeholder="Image URL or upload below...">
+                <div class="upload-btn-row">
+                  <input type="file" id="hero-bg-file" accept="image/*" class="file-input">
+                  <button type="button" class="btn btn-secondary upload-trigger" data-target="hero-bg"><i class="fas fa-upload"></i> Upload Image</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- About Settings Card -->
+          <div class="card">
+            <h3>About Section</h3>
+            <div class="form-group">
+              <label>Chef Name</label>
+              <input type="text" id="about-name" required>
+            </div>
+            <div class="form-group">
+              <label>Biography</label>
+              <textarea id="about-bio" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Cooking Philosophy</label>
+              <textarea id="about-philosophy" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Chef Profile Image</label>
+              <div class="image-upload-wrapper">
+                <input type="text" id="about-img-url" placeholder="Image URL or upload below...">
+                <div class="upload-btn-row">
+                  <input type="file" id="about-img-file" accept="image/*" class="file-input">
+                  <button type="button" class="btn btn-secondary upload-trigger" data-target="about-img"><i class="fas fa-upload"></i> Upload Image</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Counters Settings Card -->
+          <div class="card col-span-2">
+            <h3>Achievement Counters</h3>
+            <div class="counters-editor-grid">
+              <div class="counter-edit-box">
+                <h4>Counter 1</h4>
+                <div class="form-group">
+                  <label>Count Value</label>
+                  <input type="number" id="counter-0-count" required>
+                </div>
+                <div class="form-group">
+                  <label>Label</label>
+                  <input type="text" id="counter-0-label" required>
+                </div>
+              </div>
+              <div class="counter-edit-box">
+                <h4>Counter 2</h4>
+                <div class="form-group">
+                  <label>Count Value</label>
+                  <input type="number" id="counter-1-count" required>
+                </div>
+                <div class="form-group">
+                  <label>Label</label>
+                  <input type="text" id="counter-1-label" required>
+                </div>
+              </div>
+              <div class="counter-edit-box">
+                <h4>Counter 3</h4>
+                <div class="form-group">
+                  <label>Count Value</label>
+                  <input type="number" id="counter-2-count" required>
+                </div>
+                <div class="form-group">
+                  <label>Label</label>
+                  <input type="text" id="counter-2-label" required>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Sections Visibility Tab -->
+      <section id="sections-tab" class="tab-panel">
+        <div class="panel-header">
+          <h2>Sections Visibility</h2>
+          <button type="button" class="btn btn-primary save-sections-btn"><i class="fas fa-save"></i> Save Visibility</button>
+        </div>
+        <div class="card max-w-600">
+          <p class="card-desc">Toggle the switch to show or hide specific sections on the main page. Hidden sections will also disappear from the header navigation menu.</p>
+          <div class="visibility-list" id="visibility-toggles-container">
+            <!-- Dynamic toggles will be generated here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Signature Dishes Tab -->
+      <section id="dishes-tab" class="tab-panel">
+        <div class="panel-header">
+          <h2>Signature Dishes Manager</h2>
+          <button class="btn btn-primary" id="addDishBtn"><i class="fas fa-plus"></i> Add Signature Dish</button>
+        </div>
+        <div class="dishes-list-grid" id="dishes-list-container">
+          <!-- Dynamic dishes list will be generated here -->
+        </div>
+      </section>
+
+      <!-- Experience Timeline Tab -->
+      <section id="experience-tab" class="tab-panel">
+        <div class="panel-header">
+          <h2>Experience Timeline</h2>
+          <button class="btn btn-primary" id="addExpBtn"><i class="fas fa-plus"></i> Add Timeline Item</button>
+        </div>
+        <div class="timeline-list" id="experience-list-container">
+          <!-- Dynamic timeline items will be generated here -->
+        </div>
+      </section>
+
+      <!-- Gallery Tab -->
+      <section id="gallery-tab" class="tab-panel">
+        <div class="panel-header">
+          <h2>Culinary Gallery Manager</h2>
+          <button class="btn btn-primary" id="addGalleryBtn"><i class="fas fa-plus"></i> Add Gallery Image</button>
+        </div>
+        <div class="gallery-editor-grid" id="gallery-list-container">
+          <!-- Dynamic gallery images will be generated here -->
+        </div>
+      </section>
+
+      <!-- Testimonials Tab -->
+      <section id="testimonials-tab" class="tab-panel">
+        <div class="panel-header">
+          <h2>Testimonials / Reviews</h2>
+          <button class="btn btn-primary" id="addTestimonialBtn"><i class="fas fa-plus"></i> Add Testimonial</button>
+        </div>
+        <div class="testimonials-list-grid" id="testimonials-list-container">
+          <!-- Dynamic testimonials will be generated here -->
+        </div>
+      </section>
+
+      <!-- Contact & Socials Tab -->
+      <section id="contact-tab" class="tab-panel">
+        <div class="panel-header">
+          <h2>Contact Info & Social Media Links</h2>
+          <button type="button" class="btn btn-primary save-contact-btn"><i class="fas fa-save"></i> Save Settings</button>
+        </div>
+        <form id="contactForm" class="grid-2">
+          <!-- Contact Info -->
+          <div class="card">
+            <h3>Contact Information</h3>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="contact-email" required>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="text" id="contact-phone" required>
+            </div>
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" id="contact-location" required>
+            </div>
+          </div>
+
+          <!-- Social Media -->
+          <div class="card">
+            <h3>Social Media Links</h3>
+            <div class="form-group">
+              <label><i class="fab fa-instagram"></i> Instagram Link</label>
+              <input type="text" id="social-instagram" placeholder="#">
+            </div>
+            <div class="form-group">
+              <label><i class="fab fa-twitter"></i> Twitter Link</label>
+              <input type="text" id="social-twitter" placeholder="#">
+            </div>
+            <div class="form-group">
+              <label><i class="fab fa-linkedin-in"></i> LinkedIn Link</label>
+              <input type="text" id="social-linkedin" placeholder="#">
+            </div>
+            <div class="form-group">
+              <label><i class="fab fa-youtube"></i> YouTube Link</label>
+              <input type="text" id="social-youtube" placeholder="#">
+            </div>
+          </div>
+
+          <!-- Footer Copy -->
+          <div class="card col-span-2">
+            <h3>Footer Branding</h3>
+            <div class="grid-3">
+              <div class="form-group">
+                <label>Footer Logo Text</label>
+                <input type="text" id="footer-logo" required>
+              </div>
+              <div class="form-group">
+                <label>Footer Tagline</label>
+                <input type="text" id="footer-tagline" required>
+              </div>
+              <div class="form-group">
+                <label>Footer Copyright Statement</label>
+                <input type="text" id="footer-copyright" required>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Messages Tab -->
+      <section id="messages-tab" class="tab-panel">
+        <div class="panel-header">
+          <h2>Contact Form Messages</h2>
+          <button class="btn btn-danger" id="clearAllMessagesBtn" style="display: none;"><i class="fas fa-trash-alt"></i> Clear All</button>
+        </div>
+        <div class="messages-container" id="messages-list-container">
+          <!-- Dynamic message logs will be generated here -->
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Reusable Modal Dialog -->
+  <div id="editor-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2 id="modal-title">Edit Item</h2>
+      <form id="modalForm">
+        <input type="hidden" id="edit-id">
+        <input type="hidden" id="edit-type">
+        
+        <div id="modal-fields-container">
+          <!-- Populated by JavaScript based on item type -->
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary cancel-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveModalBtn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
