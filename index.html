@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chef john | Professional Chef Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=1.1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -116,51 +116,18 @@
         <p class="section-subtitle animate-on-scroll">
           A showcase of my most celebrated culinary creations
         </p>
-        <div class="dishes-grid">
-          <div class="dish-card animate-on-scroll">
-            <div class="dish-image">
-              <img src="images/image1.avif" alt="Truffle Risotto" />
-              <div class="dish-overlay">
-                <h3 class="dish-name">Black Truffle Risotto</h3>
-                <p class="dish-desc">
-                  Carnaroli rice cooked in rich bone broth with fresh black
-                  truffle and Parmigiano-Reggiano
-                </p>
-              </div>
-            </div>
+        <div class="dishes-slider-wrapper animate-on-scroll">
+          <div class="dishes-slider" id="dishesSlider">
+            <!-- Dynamically populated from JS -->
           </div>
-          <div class="dish-card animate-on-scroll">
-            <div class="dish-image">
-              <img src="images/dish-2.jpg" alt="Seared Scallops" />
-              <div class="dish-overlay">
-                <h3 class="dish-name">Pan-Seared Scallops</h3>
-                <p class="dish-desc">
-                  With cauliflower puree, pancetta crisps, and micro herbs
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="dish-card animate-on-scroll">
-            <div class="dish-image">
-              <img src="images/dish-3.jpg" alt="Chocolate Soufflé" />
-              <div class="dish-overlay">
-                <h3 class="dish-name">Grand Marnier Soufflé</h3>
-                <p class="dish-desc">
-                  Light chocolate soufflé with orange zest and crème anglaise
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="dish-card animate-on-scroll">
-            <div class="dish-image">
-              <img src="images/dish-4.jpg" alt="Herb-Crusted Lamb" />
-              <div class="dish-overlay">
-                <h3 class="dish-name">Herb-Crusted Rack of Lamb</h3>
-                <p class="dish-desc">
-                  With roasted baby vegetables and red wine reduction
-                </p>
-              </div>
-            </div>
+          <div class="dishes-slider-controls">
+            <button class="dishes-slider-btn dishes-prev-btn" id="dishesPrevBtn" aria-label="Previous Dish">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="dishes-slider-dots" id="dishesSliderDots"></div>
+            <button class="dishes-slider-btn dishes-next-btn" id="dishesNextBtn" aria-label="Next Dish">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -457,6 +424,6 @@
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.1"></script>
   </body>
 </html>

@@ -6,6 +6,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -14,7 +19,7 @@ body {
     font-family: 'Inter', sans-serif;
     color: #f5f5f5;
     background-color: #0a0a0a;
-    overflow-x: hidden;
+    font-size: 0.9rem;
     line-height: 1.6;
 }
 
@@ -36,7 +41,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .section-title {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     text-align: center;
     margin-bottom: 20px;
     position: relative;
@@ -56,7 +61,7 @@ h1, h2, h3, h4, h5 {
 
 .section-subtitle {
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: #aaa;
     margin-bottom: 40px;
     max-width: 700px;
@@ -281,7 +286,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: #D4AF37;
     margin-bottom: 15px;
     letter-spacing: 2px;
@@ -290,7 +295,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .hero-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #f5f5f5;
     margin-bottom: 20px;
     line-height: 1.2;
@@ -302,7 +307,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .hero-tagline {
-    font-size: 1.05rem;
+    font-size: 0.9rem;
     color: #ccc;
     max-width: 700px;
     margin: 0 auto 30px;
@@ -425,7 +430,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .about-name {
-    font-size: 2.2rem;
+    font-size: 1.7rem;
     color: #f5f5f5;
     margin-bottom: 15px;
     text-align: center;
@@ -434,7 +439,7 @@ h1, h2, h3, h4, h5 {
 .about-bio, .about-philosophy {
     margin-bottom: 20px;
     color: #ccc;
-    font-size: 1rem;
+    font-size: 0.88rem;
     line-height: 1.6;
 }
 
@@ -450,7 +455,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .counter-number {
-    font-size: 2.6rem;
+    font-size: 2rem;
     color: #D4AF37;
     margin-bottom: 5px;
     font-weight: 700;
@@ -458,7 +463,7 @@ h1, h2, h3, h4, h5 {
 
 .counter-label {
     color: #aaa;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -466,60 +471,176 @@ h1, h2, h3, h4, h5 {
 /* Specialties Section (Mobile First) */
 .specialties {
     background-color: #111;
-}
-
-.dishes-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 25px;
-}
-
-.dish-card {
     overflow: hidden;
-    border-radius: 10px;
-    position: relative;
-    height: 320px;
 }
 
-.dish-image {
+.dishes-slider-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0 10px;
+}
+
+.dishes-slider {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.dish-slide {
+    position: absolute;
+    width: 260px;
+    height: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease, box-shadow 0.6s ease, border-color 0.6s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    background-color: #1a1a1a;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(0, 0, -300px) scale(0.6);
+}
+
+.dish-slide .dish-image {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
-.dish-image img {
+.dish-slide .dish-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease;
 }
 
-.dish-card:hover .dish-image img {
-    transform: scale(1.1);
+.dish-slide.active:hover .dish-image img {
+    transform: scale(1.08);
 }
 
-.dish-overlay {
+.dish-slide .dish-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(10, 10, 10, 0.95));
-    padding: 25px 20px 20px;
-    transform: translateY(0); /* Make visible on mobile directly or keep hover */
-    transition: transform 0.5s ease;
+    background: linear-gradient(transparent, rgba(10, 10, 10, 0.98) 70%);
+    padding: 20px 15px;
+    text-align: center;
 }
 
-.dish-name {
-    font-size: 1.6rem;
-    color: #f5f5f5;
-    margin-bottom: 8px;
+.dish-slide .dish-name {
+    font-size: 1.15rem;
+    color: #D4AF37;
+    margin-bottom: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
 }
 
-.dish-desc {
+.dish-slide .dish-desc {
     color: #ccc;
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+/* 3D Album Flipping Classes */
+.dish-slide.active {
+    transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 5;
+    pointer-events: auto;
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.25);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+
+.dish-slide.prev {
+    transform: translate3d(-55%, 0, -150px) scale(0.8) rotateY(30deg);
+    opacity: 0.55;
+    z-index: 3;
+    pointer-events: none;
+    filter: blur(1px);
+}
+
+.dish-slide.next {
+    transform: translate3d(55%, 0, -150px) scale(0.8) rotateY(-30deg);
+    opacity: 0.55;
+    z-index: 3;
+    pointer-events: none;
+    filter: blur(1px);
+}
+
+.dish-slide.prev-hidden {
+    transform: translate3d(-110%, 0, -250px) scale(0.65) rotateY(40deg);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.dish-slide.next-hidden {
+    transform: translate3d(110%, 0, -250px) scale(0.65) rotateY(-40deg);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Slider Controls & Navigation */
+.dishes-slider-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.dishes-slider-btn {
+    background-color: transparent;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    color: #D4AF37;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
     font-size: 0.95rem;
-    line-height: 1.5;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.dishes-slider-btn:hover {
+    background-color: #D4AF37;
+    border-color: #D4AF37;
+    color: #0a0a0a;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.dishes-slider-dots {
+    display: flex;
+    margin: 0 15px;
+    gap: 8px;
+}
+
+.dishes-slider-dots .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #333;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dishes-slider-dots .dot.active {
+    background-color: #D4AF37;
+    transform: scale(1.2);
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
 }
 
 /* Experience Section (Mobile First) */
@@ -581,13 +702,13 @@ h1, h2, h3, h4, h5 {
 }
 
 .timeline-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #f5f5f5;
     margin-bottom: 5px;
 }
 
 .timeline-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: #D4AF37;
     margin-bottom: 12px;
     font-weight: 500;
@@ -595,7 +716,7 @@ h1, h2, h3, h4, h5 {
 
 .timeline-desc {
     color: #ccc;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     line-height: 1.5;
 }
 
@@ -834,7 +955,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .contact-heading, .social-heading {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: #f5f5f5;
     margin-bottom: 25px;
     position: relative;
@@ -868,14 +989,14 @@ h1, h2, h3, h4, h5 {
 }
 
 .contact-item h4 {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: #f5f5f5;
     margin-bottom: 4px;
 }
 
 .contact-item p {
     color: #ccc;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
 }
 
 .social-icons {
@@ -1079,10 +1200,6 @@ h1, h2, h3, h4, h5 {
 
 /* Small Devices (Mobile Landscape & Small Tablets) */
 @media (min-width: 576px) {
-    .dishes-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1190,22 +1307,32 @@ h1, h2, h3, h4, h5 {
         justify-content: space-between;
     }
     
-    .dishes-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
+    .dishes-slider {
+        height: 420px;
+        margin-bottom: 35px;
     }
     
-    .dish-card {
-        height: 350px;
+    .dish-slide {
+        width: 340px;
+        height: 380px;
+    }
+
+    .dish-slide .dish-name {
+        font-size: 1.4rem;
+    }
+
+    .dish-slide .dish-desc {
+        font-size: 0.88rem;
     }
     
-    .dish-overlay {
-        transform: translateY(100%);
-        padding: 30px 20px 20px;
+    .dish-slide.prev {
+        transform: translate3d(-60%, 0, -180px) scale(0.82) rotateY(32deg);
+        opacity: 0.6;
     }
-    
-    .dish-card:hover .dish-overlay {
-        transform: translateY(0);
+
+    .dish-slide.next {
+        transform: translate3d(60%, 0, -180px) scale(0.82) rotateY(-32deg);
+        opacity: 0.6;
     }
     
     /* Center Timeline on Desktop */

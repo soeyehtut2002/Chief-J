@@ -1,6 +1,7 @@
 // script.js
 
 let currentSlide = 0;
+let activeDishIndex = 0;
 
 // Fetch and Render Dynamic Content
 document.addEventListener('DOMContentLoaded', () => {
@@ -105,13 +106,16 @@ function renderPortfolio(data) {
 
     // 5. Signature Dishes (Specialties)
     if (data.dishes) {
-        const dishesGrid = document.querySelector('.dishes-grid');
-        if (dishesGrid) {
-            dishesGrid.innerHTML = '';
-            data.dishes.forEach(dish => {
-                const card = document.createElement('div');
-                card.className = 'dish-card animate-on-scroll';
-                card.innerHTML = `
+        const dishesSlider = document.getElementById('dishesSlider');
+        const dotsContainer = document.getElementById('dishesSliderDots');
+        if (dishesSlider) {
+            dishesSlider.innerHTML = '';
+            if (dotsContainer) dotsContainer.innerHTML = '';
+            
+            data.dishes.forEach((dish, idx) => {
+                const slide = document.createElement('div');
+                slide.className = 'dish-slide';
+                slide.innerHTML = `
                     <div class="dish-image">
                         <img src="${dish.image_url}" alt="${dish.title}" />
                         <div class="dish-overlay">
@@ -120,8 +124,20 @@ function renderPortfolio(data) {
                         </div>
                     </div>
                 `;
-                dishesGrid.appendChild(card);
+                dishesSlider.appendChild(slide);
+                
+                if (dotsContainer) {
+                    const dot = document.createElement('span');
+                    dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+                    dot.addEventListener('click', () => {
+                        activeDishIndex = idx;
+                        updateDishesSlider();
+                    });
+                    dotsContainer.appendChild(dot);
+                }
             });
+            
+            updateDishesSlider();
         }
     }
 
@@ -346,6 +362,50 @@ function initializeInteractions() {
                 document.body.style.overflow = 'auto';
             }
         });
+    }
+
+    // Specialties (Signature Dishes) 3D Slider Controls
+    const dishesPrevBtn = document.getElementById('dishesPrevBtn');
+    const dishesNextBtn = document.getElementById('dishesNextBtn');
+    const dishesSlider = document.getElementById('dishesSlider');
+
+    if (dishesPrevBtn && dishesNextBtn && dishesSlider) {
+        dishesNextBtn.addEventListener('click', () => {
+            const slides = document.querySelectorAll('.dish-slide');
+            if (slides.length <= 1) return;
+            activeDishIndex = (activeDishIndex + 1) % slides.length;
+            updateDishesSlider();
+        });
+
+        dishesPrevBtn.addEventListener('click', () => {
+            const slides = document.querySelectorAll('.dish-slide');
+            if (slides.length <= 1) return;
+            activeDishIndex = (activeDishIndex - 1 + slides.length) % slides.length;
+            updateDishesSlider();
+        });
+
+        // Swipe gestures for touch screens
+        let dishTouchStart = 0;
+        let dishTouchEnd = 0;
+        
+        dishesSlider.addEventListener('touchstart', e => {
+            dishTouchStart = e.changedTouches[0].clientX;
+        }, { passive: true });
+        
+        dishesSlider.addEventListener('touchend', e => {
+            dishTouchEnd = e.changedTouches[0].clientX;
+            const threshold = 50;
+            const slides = document.querySelectorAll('.dish-slide');
+            if (slides.length <= 1) return;
+            
+            if (dishTouchStart - dishTouchEnd > threshold) {
+                activeDishIndex = (activeDishIndex + 1) % slides.length;
+                updateDishesSlider();
+            } else if (dishTouchEnd - dishTouchStart > threshold) {
+                activeDishIndex = (activeDishIndex - 1 + slides.length) % slides.length;
+                updateDishesSlider();
+            }
+        }, { passive: true });
     }
 
     // 7. Testimonial Slider Controls
@@ -612,5 +672,36 @@ function setupDotClicks() {
         dot.addEventListener('click', () => {
             showSlide(index);
         });
+    });
+}
+
+function updateDishesSlider() {
+    const slides = document.querySelectorAll('.dish-slide');
+    const dots = document.querySelectorAll('.dishes-slider-dots .dot');
+    if (slides.length === 0) return;
+    
+    slides.forEach((slide, idx) => {
+        slide.classList.remove('active', 'prev', 'next', 'prev-hidden', 'next-hidden');
+        
+        let offset = idx - activeDishIndex;
+        const total = slides.length;
+        if (offset < -1 && offset < -total / 2) offset += total;
+        if (offset > 1 && offset > total / 2) offset -= total;
+        
+        if (offset === 0) {
+            slide.classList.add('active');
+        } else if (offset === -1) {
+            slide.classList.add('prev');
+        } else if (offset === 1) {
+            slide.classList.add('next');
+        } else if (offset < 0) {
+            slide.classList.add('prev-hidden');
+        } else if (offset > 0) {
+            slide.classList.add('next-hidden');
+        }
+    });
+    
+    dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeDishIndex);
     });
 }
