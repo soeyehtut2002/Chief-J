@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 3001;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 const SESSION_TOKEN = process.env.SESSION_TOKEN || 'chef-john-admin-session-token-12345';
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ limit: '20mb', extended: true }));
 
 // Serve static files from 'john' directory
 app.use(express.static(path.join(__dirname, 'john')));
@@ -68,7 +68,7 @@ async function createTablesAndSeed() {
       id SERIAL PRIMARY KEY,
       title VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
-      image_url VARCHAR(255) NOT NULL
+      image_url TEXT NOT NULL
     );
     CREATE TABLE IF NOT EXISTS experience (
       id SERIAL PRIMARY KEY,
@@ -79,7 +79,7 @@ async function createTablesAndSeed() {
     );
     CREATE TABLE IF NOT EXISTS gallery (
       id SERIAL PRIMARY KEY,
-      image_url VARCHAR(255) NOT NULL,
+      image_url TEXT NOT NULL,
       alt VARCHAR(255) NOT NULL
     );
     CREATE TABLE IF NOT EXISTS testimonials (
@@ -98,6 +98,14 @@ async function createTablesAndSeed() {
     );
   `;
   await pool.query(schema);
+
+  // Migrate existing tables image_url columns to TEXT to support Base64 strings
+  try {
+    await pool.query("ALTER TABLE dishes ALTER COLUMN image_url TYPE TEXT;");
+    await pool.query("ALTER TABLE gallery ALTER COLUMN image_url TYPE TEXT;");
+  } catch (alterErr) {
+    console.warn("Could not alter table columns:", alterErr.message);
+  }
 
   // Seed data from local data.json if the portfolio_settings table is empty
   const countRes = await pool.query("SELECT COUNT(*) FROM portfolio_settings");
@@ -688,20 +696,35 @@ app.post('/api/admin/upload', authenticateAdmin, upload.single('image'), async (
         imgbbReq.end();
       });
 
-      // Cleanup local temp file if diskStorage was used (although memoryStorage is usually preferred for cloud,
-      // here we used diskStorage so we should remove it from uploadsDir to save disk space)
-      fs.unlinkSync(req.file.path);
+      // Cleanup local temp file
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
 
       return res.json({ url: fileUrl });
     } catch (err) {
-      console.error("ImgBB upload failed, falling back to local storage:", err.message);
-      // Fallback: keep the local file and return the local URL
+      console.error("ImgBB upload failed, falling back to base64 storage:", err.message);
     }
   }
 
-  // Local storage return path (relative to the static mount)
-  const relativeUrl = `images/uploads/${req.file.filename}`;
-  res.json({ url: relativeUrl });
+  // Convert the uploaded file to a base64 Data URL so it is stored directly in DB/JSON.
+  // This prevents images from disappearing on ephemeral serverless platforms like Vercel.
+  try {
+    const fileBuffer = fs.readFileSync(req.file.path);
+    const base64Image = fileBuffer.toString('base64');
+    const dataUrl = `data:${req.file.mimetype};base64,${base64Image}`;
+    
+    // Cleanup local temp file immediately to save disk space
+    if (fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    
+    return res.json({ url: dataUrl });
+  } catch (err) {
+    console.error("Base64 conversion failed, returning relative path fallback:", err);
+    const relativeUrl = `images/uploads/${req.file.filename}`;
+    res.json({ url: relativeUrl });
+  }
 });
 
 // Route everything else to the portfolio static site
