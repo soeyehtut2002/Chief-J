@@ -480,6 +480,7 @@ h1, h2, h3, h4, h5 {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px 0 10px;
+    overflow: hidden;
 }
 
 .dishes-slider {
@@ -1187,13 +1188,13 @@ h1, h2, h3, h4, h5 {
 
 .animate-on-scroll-left {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateY(15px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .animate-on-scroll-right {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateY(15px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
@@ -1317,6 +1318,14 @@ h1, h2, h3, h4, h5 {
 @media (min-width: 992px) {
     .section {
         padding: 100px 0;
+    }
+    
+    .animate-on-scroll-left {
+        transform: translateX(-30px);
+    }
+    
+    .animate-on-scroll-right {
+        transform: translateX(30px);
     }
     
     .section-title {
