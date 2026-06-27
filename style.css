@@ -726,17 +726,29 @@ h1, h2, h3, h4, h5 {
 }
 
 .gallery-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
     gap: 15px;
+    padding: 10px 5px 25px;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.gallery-grid::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome/Safari */
 }
 
 .gallery-item {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
-    height: 220px;
+    height: 240px;
+    flex: 0 0 240px;
+    scroll-snap-align: center;
     cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .gallery-item img {
@@ -747,7 +759,26 @@ h1, h2, h3, h4, h5 {
 }
 
 .gallery-item:hover img {
-    transform: scale(1.1);
+    transform: scale(1.08);
+}
+
+.mobile-swipe-hint {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 0.8rem;
+    color: #D4AF37;
+    opacity: 0.8;
+}
+
+@media (max-width: 575px) {
+    .mobile-swipe-hint i {
+        animation: swipeGesture 2s infinite;
+    }
+    
+    @keyframes swipeGesture {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(-5px); }
+    }
 }
 
 .gallery-overlay {
@@ -1198,10 +1229,22 @@ h1, h2, h3, h4, h5 {
    PROGRESSIVE ENHANCEMENT (Min-Width Queries)
    ========================================== */
 
-/* Small Devices (Mobile Landscape & Small Tablets) */
 @media (min-width: 576px) {
     .gallery-grid {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding: 0;
+    }
+    
+    .gallery-item {
+        flex: none;
+        height: 220px;
+    }
+    
+    .mobile-swipe-hint {
+        display: none;
     }
 }
 
@@ -1388,11 +1431,16 @@ h1, h2, h3, h4, h5 {
     }
     
     .gallery-grid {
+        display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding: 0;
     }
     
     .gallery-item {
+        flex: none;
         height: 250px;
     }
     
